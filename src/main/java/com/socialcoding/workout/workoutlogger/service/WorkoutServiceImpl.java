@@ -5,10 +5,11 @@ import com.socialcoding.workout.workoutlogger.entity.Workout;
 import com.socialcoding.workout.workoutlogger.repository.UserRepository;
 import com.socialcoding.workout.workoutlogger.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service("workoutService")
 public class WorkoutServiceImpl {
     @Autowired
     private WorkoutRepository workoutRepository;

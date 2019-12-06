@@ -1,6 +1,7 @@
 package com.socialcoding.workout.workoutlogger.service;
 
 import com.socialcoding.workout.workoutlogger.entity.Workout;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
