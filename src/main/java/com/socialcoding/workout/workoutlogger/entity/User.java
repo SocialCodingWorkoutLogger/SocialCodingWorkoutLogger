@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {
@@ -18,9 +16,6 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Workout> workouts = new ArrayList<>();
 
     protected User() {}
 
@@ -42,10 +37,6 @@ public class User {
         return password;
     }
 
-    public List<Workout> getWorkouts() {
-        return workouts;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -57,10 +48,6 @@ public class User {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setWorkouts(List<Workout> workouts) {
-        this.workouts = workouts;
     }
 
     @Override

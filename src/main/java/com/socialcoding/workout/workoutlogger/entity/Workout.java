@@ -1,8 +1,11 @@
 package com.socialcoding.workout.workoutlogger.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Workout {
@@ -10,12 +13,11 @@ public class Workout {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private User user;
-
-    @OneToMany
-    private List<Exercise> exercises;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
@@ -58,10 +60,6 @@ public class Workout {
         return user;
     }
 
-    public List<Exercise> getExercises() {
-        return exercises;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -80,10 +78,6 @@ public class Workout {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
     }
 
     public void setDate(Date date) {
