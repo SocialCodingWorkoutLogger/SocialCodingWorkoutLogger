@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/users")
     public ResponseEntity<List<User>> listUsers() {
         List<User> users = userService.findAllUsers();
         if (users.isEmpty()) {
@@ -32,19 +32,19 @@ public class UserController {
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") int id) {
-        logger.info("Fetching User with id {}", id);
-        User user = userService.findUserById(id);
+    @GetMapping(value = "/users/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable("userId") int userId) {
+        logger.info("Fetching User with id {}", userId);
+        User user = userService.findUserById(userId);
         if (user == null) {
-            logger.error("User with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("User with id " + id
+            logger.error("User with id {} not found.", userId);
+            return new ResponseEntity(new CustomErrorType("User with id " + userId
                     + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/users")
     public ResponseEntity<?> createUser(@RequestBody User user, UriComponentsBuilder uriBuilder) {
         logger.info("Creating User : {}", user);
 
@@ -56,38 +56,38 @@ public class UserController {
         userService.saveUser(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+        headers.setLocation(uriBuilder.path("/user/{userId}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/user/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") int id, @RequestBody User user) {
-        logger.info("Updating User with id {}", id);
+    @PutMapping(value = "/users/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable("userId") int userId, @RequestBody User user) {
+        logger.info("Updating User with id {}", userId);
 
-        User currentUser = userService.findUserById(id);
+        User currentUser = userService.findUserById(userId);
 
         if (currentUser == null) {
-            logger.error("Unable to update. User with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("Unable to update. User with id " + id + " not found."),
+            logger.error("Unable to update. User with id {} not found.", userId);
+            return new ResponseEntity(new CustomErrorType("Unable to update. User with id " + userId + " not found."),
                     HttpStatus.NOT_FOUND);
         }
 
-        user.setId(id);
+        user.setId(userId);
         userService.saveUser(user);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
-        logger.info("Deleting User with id {}", id);
+    @DeleteMapping(value = "/users/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") int userId) {
+        logger.info("Deleting User with id {}", userId);
 
-        User user = userService.findUserById(id);
+        User user = userService.findUserById(userId);
         if (user == null) {
-            logger.error("Unable to delete. User with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("Unable to delete. User with id " + id + " not found."),
+            logger.error("Unable to delete. User with id {} not found.", userId);
+            return new ResponseEntity(new CustomErrorType("Unable to delete. User with id " + userId + " not found."),
                     HttpStatus.NOT_FOUND);
         }
-        userService.deleteUserById(id);
+        userService.deleteUserById(userId);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 }
