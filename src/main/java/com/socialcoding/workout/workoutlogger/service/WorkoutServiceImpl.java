@@ -23,6 +23,19 @@ public class WorkoutServiceImpl {
         return null;
     }
 
+    public Workout findWorkoutByIdAndUserId(int workoutId, int userId) {
+        Optional found = workoutRepository.findByIdAndUserId(workoutId, userId);
+        if(found.isPresent()) {
+            Workout workout = (Workout) found.get();
+            return workout;
+        }
+        return null;
+    }
+
+    public List<Workout> findWorkoutsByUserId(int userId) {
+        List<Workout> workouts = workoutRepository.findByUserId(userId);
+        return workouts;
+    }
 
     public void saveWorkout(Workout workout) {
         workoutRepository.save(workout);
@@ -30,11 +43,6 @@ public class WorkoutServiceImpl {
 
     public void deleteWorkoutById(int id) {
         workoutRepository.deleteById(id);
-    }
-
-    public List<Workout> findAllWorkouts() {
-        List<Workout> workouts = workoutRepository.findAll();
-        return workouts;
     }
 
 }
