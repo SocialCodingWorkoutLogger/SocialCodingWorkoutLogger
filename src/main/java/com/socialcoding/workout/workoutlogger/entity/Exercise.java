@@ -1,5 +1,9 @@
 package com.socialcoding.workout.workoutlogger.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,7 +12,7 @@ public class Exercise {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable =  false)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -17,7 +21,10 @@ public class Exercise {
     @Column(nullable = false)
     private int reps;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "workout_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Workout workout;
 
     protected Exercise() {}
@@ -44,7 +51,7 @@ public class Exercise {
         return reps;
     }
 
-    public Workout getWorkouts() {
+    public Workout getWorkout() {
         return workout;
     }
 
