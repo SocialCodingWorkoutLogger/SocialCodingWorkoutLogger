@@ -16,6 +16,6 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    boolean userExists(User user);
+    boolean existsById(int id);
 
 }

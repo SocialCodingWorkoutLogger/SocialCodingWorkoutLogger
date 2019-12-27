@@ -43,7 +43,7 @@ public class UserServiceImpl {
         return users;
     }
 
-    public boolean userExists(User user) {
-        return findByUsername(user.getUsername()) != null;
+    public boolean existsById(int id) {
+        return userRepository.existsById(id);
     }
 }

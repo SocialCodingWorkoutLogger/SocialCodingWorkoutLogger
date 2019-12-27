@@ -45,4 +45,12 @@ public class WorkoutServiceImpl {
         workoutRepository.deleteById(id);
     }
 
+    public boolean existsById(int id) {
+        return workoutRepository.existsById(id);
+    }
+
+    public boolean existsByIdAndUserId(int workoutId, int userId) {
+        return workoutRepository.existsByIdAndUserId(workoutId, userId);
+    }
+
 }
