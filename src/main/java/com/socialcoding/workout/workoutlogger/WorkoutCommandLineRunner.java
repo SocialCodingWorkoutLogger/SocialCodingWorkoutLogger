@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.socialcoding.workout.workoutlogger.entity.Exercise;
 import com.socialcoding.workout.workoutlogger.entity.Workout;
+import com.socialcoding.workout.workoutlogger.repository.ExerciseRepository;
 import com.socialcoding.workout.workoutlogger.repository.WorkoutRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,9 @@ public class WorkoutCommandLineRunner implements CommandLineRunner{
     @Autowired
     private WorkoutRepository workoutRepository;
 
+    @Autowired
+    private ExerciseRepository exerciseRepository;
+
     @Override
     public void run(String... arg0) throws Exception {
         User user = new User("coder", "password123");
@@ -38,6 +43,10 @@ public class WorkoutCommandLineRunner implements CommandLineRunner{
         workoutRepository.save(workout);
         log.info("New Workout is created : " + workout);
 
+        Exercise exercise = new Exercise("Bench", 5, 5, 110);
+        exercise.setWorkout(workout);
+        exerciseRepository.save(exercise);
+
         Optional<User> userWithIdOne = userRepository.findById(1);
         log.info("User is retrieved : " + userWithIdOne);
 
@@ -45,7 +54,13 @@ public class WorkoutCommandLineRunner implements CommandLineRunner{
         log.info("All Users : " + users);
 
         List<Workout> workouts = workoutRepository.findAll();
-        log.info("All Workouts : " + workout);
+        log.info("All Workouts : " + workouts);
+
+        Optional<Exercise> exerciseWithIdOne = exerciseRepository.findByIdAndWorkoutId(1, 1);
+        log.info("Exercise with id 1 and workout id 1: " + exerciseWithIdOne);
+
+        List<Exercise> exercisesForWorkoutOne = exerciseRepository.findByWorkoutId(1);
+        log.info("All exercises for workout with id 1: " + exercisesForWorkoutOne);
     }
 
 }

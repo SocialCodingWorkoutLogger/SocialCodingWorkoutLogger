@@ -21,6 +21,9 @@ public class Exercise {
     @Column(nullable = false)
     private int reps;
 
+    @Column(nullable = false)
+    private double weight;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "workout_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -29,10 +32,11 @@ public class Exercise {
 
     protected Exercise() {}
 
-    public Exercise(String name, int sets, int reps) {
+    public Exercise(String name, int sets, int reps, double weight) {
         this.name = name;
         this.sets = sets;
         this.reps = reps;
+        this.weight = weight;
     }
 
     public int getId() {
@@ -49,6 +53,10 @@ public class Exercise {
 
     public int getReps() {
         return reps;
+    }
+
+    public double getWeight() {
+        return weight;
     }
 
     public Workout getWorkout() {
@@ -71,6 +79,10 @@ public class Exercise {
         this.reps = reps;
     }
 
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
     public void setWorkout(Workout workout) {
         this.workout = workout;
     }
@@ -82,7 +94,7 @@ public class Exercise {
                 ", name='" + name + '\'' +
                 ", sets=" + sets +
                 ", reps=" + reps +
-                ", workout=" + workout +
+                ", weight=" + weight +
                 '}';
     }
 }

@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface WorkoutRepository extends JpaRepository<Workout, Integer> {
     List<Workout> findByUserId(int userId);
     Optional<Workout> findByIdAndUserId(int id, int userId);
+    boolean existsByIdAndUserId(int id, int userId);
 }

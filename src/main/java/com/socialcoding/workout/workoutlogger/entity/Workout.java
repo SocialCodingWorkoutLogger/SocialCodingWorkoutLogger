@@ -96,7 +96,6 @@ public class Workout {
     public String toString() {
         return "Workout{" +
                 "id=" + id +
-                ", user=" + user +
                 ", date=" + date +
                 ", durationMinutes=" + durationMinutes +
                 ", notes='" + notes + '\'' +
