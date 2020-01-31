@@ -3,6 +3,8 @@ package com.socialcoding.workout.workoutlogger.service;
 import com.socialcoding.workout.workoutlogger.entity.User;
 import com.socialcoding.workout.workoutlogger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +40,8 @@ public class UserServiceImpl {
         userRepository.deleteById(id);
     }
 
-    public List<User> findAllUsers() {
-        List<User> users = userRepository.findAll();
+    public Page<User> findAllUsers(Pageable pageable) {
+        Page<User> users = userRepository.findAll(pageable);
         return users;
     }
 
