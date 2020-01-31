@@ -6,6 +6,8 @@ import com.socialcoding.workout.workoutlogger.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,12 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> listUsers() {
-        List<User> users = userService.findAllUsers();
+    public ResponseEntity<Page<User>> listUsers(Pageable pageable) {
+        Page<User> users = userService.findAllUsers(pageable);
         if (users.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        return new ResponseEntity<Page<User>>(users, HttpStatus.OK);
     }
 
     @GetMapping(value = "/users/{userId}")

@@ -1,6 +1,7 @@
 package com.socialcoding.workout.workoutlogger.service;
 
 import com.socialcoding.workout.workoutlogger.entity.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface UserService {
 
     void deleteUserById(int id);
 
-    List<User> findAllUsers();
+    Page<User> findAll();
 
     boolean existsById(int id);
 
