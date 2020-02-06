@@ -61,8 +61,6 @@ public class WorkoutCommandLineRunner implements CommandLineRunner{
         Optional<Exercise> exerciseWithIdOne = exerciseRepository.findByIdAndWorkoutId(1, 1);
         log.info("Exercise with id 1 and workout id 1: " + exerciseWithIdOne);
 
-        List<Exercise> exercisesForWorkoutOne = exerciseRepository.findByWorkoutId(1);
-        log.info("All exercises for workout with id 1: " + exercisesForWorkoutOne);
     }
 
 }
