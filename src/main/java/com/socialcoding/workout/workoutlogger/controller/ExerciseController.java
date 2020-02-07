@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +38,9 @@ public class ExerciseController {
     private UserServiceImpl userService;
 
     @GetMapping(value = "/users/{userId}/workouts/{workoutId}/exercises")
-    public ResponseEntity<List<Exercise>> listExercises(@PathVariable("userId") int userId,
-                                                      @PathVariable("workoutId") int workoutId) {
+    public ResponseEntity<Page<Exercise>> listExercises(@PathVariable("userId") int userId,
+                                                        @PathVariable("workoutId") int workoutId,
+                                                        Pageable pageable) {
         logger.info("Fetching Exercises with userId {} and workoutId {}", userId, workoutId);
 
         if(!userService.existsById(userId)) {
@@ -51,11 +54,11 @@ public class ExerciseController {
                     + " and userId " + userId + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        List<Exercise> exercises = exerciseService.findExercisesByWorkoutAndUserIds(workoutId, userId);
+        Page<Exercise> exercises = exerciseService.findExercisesByWorkoutAndUserIds(workoutId, userId, pageable);
         if (exercises.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Exercise>>(exercises, HttpStatus.OK);
+        return new ResponseEntity<Page<Exercise>>(exercises, HttpStatus.OK);
     }
 
     @GetMapping(value = "/users/{userId}/workouts/{workoutId}/exercises/{exerciseId}")
