@@ -18,6 +18,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 @RestController
 public class WorkoutController {
@@ -31,12 +34,13 @@ public class WorkoutController {
         UserServiceImpl userService;
 
         @GetMapping(value = "/users/{userId}/workouts")
-        public ResponseEntity<List<Workout>> listWorkouts(@PathVariable("userId") int userId) {
-            List<Workout> workouts = workoutService.findWorkoutsByUserId(userId);
+        public ResponseEntity<Page<Workout>> listWorkouts(@PathVariable("userId") int userId,
+                                                          Pageable pageable) {
+            Page<Workout> workouts = workoutService.findWorkoutsByUserId(userId, pageable);
             if (workouts.isEmpty()) {
                 return new ResponseEntity(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<List<Workout>>(workouts, HttpStatus.OK);
+            return new ResponseEntity<Page<Workout>>(workouts, HttpStatus.OK);
         }
 
         @GetMapping(value = "/users/{userId}/workouts/{workoutId}")
