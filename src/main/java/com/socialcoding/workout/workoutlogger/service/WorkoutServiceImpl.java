@@ -5,6 +5,8 @@ import com.socialcoding.workout.workoutlogger.entity.Workout;
 import com.socialcoding.workout.workoutlogger.repository.UserRepository;
 import com.socialcoding.workout.workoutlogger.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class WorkoutServiceImpl {
         return null;
     }
 
-    public List<Workout> findWorkoutsByUserId(int userId) {
-        List<Workout> workouts = workoutRepository.findByUserId(userId);
+    public Page<Workout> findWorkoutsByUserId(int userId, Pageable pageable) {
+        Page<Workout> workouts = workoutRepository.findByUserId(userId, pageable);
         return workouts;
     }
 
